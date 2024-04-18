@@ -30,7 +30,7 @@ function delCookie(name) {
 	setCookie(name,"",-1);
 }
 if (getCookie("counter")) {
-  var count = parseInt(getCookie("counter")) + 1 || 1;
+  var count = parseInt(getCookie("counter")) - 1 || 1;
   setCookie("counter",count,365);
 } else {
   setCookie("counter",1,365);
