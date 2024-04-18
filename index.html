@@ -9,14 +9,11 @@
     <div id="counter">Loading...</div>
 
     <script>
-        const apiKey = 'lh0zRf9KF3eQJ8UQcsPtOCCw_b_A9-i5';
-        const pasteID = '3ry5Zgdz';
-        
-        // Получаем текущее значение счетчика с Pastebin
-        fetch(`https://pastebin.com/raw/${pasteID}`)
-            .then(response => response.text())
+        // Получаем текущее значение счетчика с JSONPlaceholder
+        fetch('https://jsonplaceholder.typicode.com/posts/1')
+            .then(response => response.json())
             .then(data => {
-                let count = parseInt(data) || 0;
+                let count = parseInt(data.body) || 0;
                 
                 // Увеличиваем счетчик
                 count++;
@@ -24,28 +21,23 @@
                 // Обновляем DOM
                 document.getElementById('counter').innerText = `Licznik: ${count}`;
 
-                // Отправляем данные на Pastebin
-                fetch(`https://pastebin.com/api/api_post.php`, {
-                    method: 'POST',
+                // Отправляем данные на JSONPlaceholder (замените этот код на свой, в зависимости от вашего предпочтения)
+                fetch('https://jsonplaceholder.typicode.com/posts/1', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        id: 1,
+                        title: 'Updated Counter',
+                        body: count
+                    }),
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `api_dev_key=${apiKey}&api_option=update&api_paste_code=${count}&api_paste_key=${pasteID}`
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Data saved successfully');
-                    } else {
-                        console.error('Failed to save data');
+                        'Content-type': 'application/json; charset=UTF-8'
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
     </script>
 </body>
 </html>
