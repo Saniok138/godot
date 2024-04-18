@@ -9,40 +9,23 @@
     <div id="counter">Loading...</div>
 
     <script>
-        // Получаем текущее значение счетчика из куки
+        // Получаем текущее значение счетчика из куков
         let count = parseInt(getCookie("visits")) || 0;
         
         // Увеличиваем счетчик
         count++;
         
         // Устанавливаем новое значение счетчика в куки
-        setCookie("visits", count, 365);
+        document.cookie = `visits=${count}; expires=${new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
         
         // Обновляем DOM
         document.getElementById("counter").innerText = `Licznik: ${count}`;
         
-        // Функция для установки куки
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-        
-        // Функция для получения значения куки
+        // Функция для получения значения куков
         function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const cookies = decodedCookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                let cookie = cookies[i];
-                while (cookie.charAt(0) === ' ') {
-                    cookie = cookie.substring(1);
-                }
-                if (cookie.indexOf(name) === 0) {
-                    return cookie.substring(name.length + 1, cookie.length);
-                }
-            }
-            return "";
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
         }
     </script>
 </body>
