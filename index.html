@@ -6,38 +6,13 @@
     <title>Visit Counter</title>
 </head>
 <body>
-    <div id="counter">Loading...</div>
-
-    <script>
-        // Получаем текущее значение счетчика с JSONPlaceholder
-        fetch('https://jsonplaceholder.typicode.com/posts/1')
-            .then(response => response.json())
-            .then(data => {
-                let count = parseInt(data.body) || 0;
-                
-                // Увеличиваем счетчик
-                count++;
-                
-                // Обновляем DOM
-                document.getElementById('counter').innerText = `Licznik: ${count}`;
-
-                // Отправляем данные на JSONPlaceholder (замените этот код на свой, в зависимости от вашего предпочтения)
-                fetch('https://jsonplaceholder.typicode.com/posts/1', {
-                    method: 'PUT',
-                    body: JSON.stringify({
-                        id: 1,
-                        title: 'Updated Counter',
-                        body: count
-                    }),
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-            })
-            .catch(error => console.error('Error:', error));
-    </script>
+    <div id="qoo-counter">
+<a href="askm.me/" title="Бесплатный счетчик посещений на сайт">
+<img src="askm.me/counter/small/009s.png" alt="Счетчик посещаемости и статистика сайта">
+<div id="qoo-counter-visits"></div>
+<div id="qoo-counter-views" style="display:none;"></div>
+</a>
+</div>
+<script type="text/javascript" src="askm.me/counter.js"></script>
 </body>
 </html>
