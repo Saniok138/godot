@@ -9,24 +9,17 @@
     <div id="counter">Loading...</div>
 
     <script>
-        // Получаем текущее значение счетчика из куков
-        let count = parseInt(getCookie("visits")) || 0;
+        // Получаем текущее значение счетчика из Local Storage
+        let count = parseInt(localStorage.getItem("visits")) || 0;
         
         // Увеличиваем счетчик
         count++;
         
-        // Устанавливаем новое значение счетчика в куки
-        document.cookie = `visits=${count}; expires=${new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+        // Устанавливаем новое значение счетчика в Local Storage
+        localStorage.setItem("visits", count);
         
         // Обновляем DOM
         document.getElementById("counter").innerText = `Licznik: ${count}`;
-        
-        // Функция для получения значения куков
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
     </script>
 </body>
 </html>
