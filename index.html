@@ -12,36 +12,40 @@
         const apiKey = 'lh0zRf9KF3eQJ8UQcsPtOCCw_b_A9-i5';
         const pasteID = '3ry5Zgdz';
         
-        // Получаем текущее значение счетчика из Local Storage
-        let count = parseInt(localStorage.getItem('visits')) || 0;
-        
-        // Увеличиваем счетчик
-        count++;
-        
-        // Устанавливаем новое значение счетчика в Local Storage
-        localStorage.setItem('visits', count);
-        
-        // Обновляем DOM
-        document.getElementById('counter').innerText = `Licznik: ${count}`;
+        // Получаем текущее значение счетчика с Pastebin
+        fetch(`https://pastebin.com/raw/${pasteID}`)
+            .then(response => response.text())
+            .then(data => {
+                let count = parseInt(data) || 0;
+                
+                // Увеличиваем счетчик
+                count++;
+                
+                // Обновляем DOM
+                document.getElementById('counter').innerText = `Licznik: ${count}`;
 
-        // Отправляем данные на Pastebin
-        fetch(`https://pastebin.com/api/api_post.php`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `api_dev_key=${apiKey}&api_option=update&api_paste_code=${count}&api_paste_key=${pasteID}`
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Data saved successfully');
-            } else {
-                console.error('Failed to save data');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                // Отправляем данные на Pastebin
+                fetch(`https://pastebin.com/api/api_post.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `api_dev_key=${apiKey}&api_option=update&api_paste_code=${count}&api_paste_key=${pasteID}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data saved successfully');
+                    } else {
+                        console.error('Failed to save data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     </script>
 </body>
 </html>
