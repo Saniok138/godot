@@ -15,22 +15,22 @@ const filePath = 'visits.txt';
 const githubToken = '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';
 
 const count = parseInt(localStorage.getItem('visits')) || 0;
-const content = `Number of visits: ${count}`;
+const content = `Number of visits: {count}`;
 
-fetch(`https://api.github.com/repos/${githubUsername}/${repoName}/contents/${filePath}`, {
+fetch(`https://api.github.com/repos/{githubUsername}/{repoName}/contents/{filePath}`, {
     method: 'GET',
     headers: {
-        'Authorization': `token ${githubToken}`
+        'Authorization': `token {githubToken}`
     }
 })
 .then(response => response.json())
 .then(data => {
     const fileSha = data.sha;
 
-    fetch(`https://api.github.com/repos/${githubUsername}/${repoName}/contents/${filePath}`, {
+    fetch(`https://api.github.com/repos/{githubUsername}/{repoName}/contents/{filePath}`, {
         method: 'PUT',
         headers: {
-            'Authorization': `token ${githubToken}`,
+            'Authorization': `token {githubToken}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
